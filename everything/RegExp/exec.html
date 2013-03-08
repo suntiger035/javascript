@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8"/>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+var text = 'cat,bat,sat,fat';
+var pattern1 = /.at/;
+var matches = pattern1.exec(text);
+
+alert(matches.index); //0
+alert(matches[0]);    //cat
+alert(pattern1.lastIndex);//3
+
+matches = pattern1.exec(text);
+
+alert(matches.index); //0
+alert(matches[0]);    //cat
+alert(pattern1.lastIndex);//3
+
+var pattern2 = /.at/g;
+var matches2 = pattern2.exec(text);
+
+alert(matches2.index); //0
+alert(matches2[0]);    //cat
+alert(pattern2.lastIndex);//3
+
+matches2 = pattern2.exec(text);
+alert(matches2.index); //4
+alert(matches2[0]);    //bat
+alert(pattern2.lastIndex);//7
+</script>
+</body>
+</html>

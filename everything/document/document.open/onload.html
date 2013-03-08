@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+222
+<script> 
+Object.defineProperty(document, "open", {
+    set: function (x) {
+        console.log("in property set accessor" + newLine);
+        //this.newaccpropvalue = x;
+    },
+    get: function () {
+        console.log("in property get accessor" + newLine);
+        return this.newaccpropvalue;
+    },
+    enumerable: true,
+    configurable: true
+});
+
+document.write(44444);
+document.onclick = function(){
+	document.open();
+	document.write("111");
+	document.close();
+}
+</script>
+</body>
+</html>

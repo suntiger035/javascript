@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8"/>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+/*var str = "woshi  sunlao";
+console.log(str.replace(/(woshi)\s+(sunlao)/g, function(){
+	console.warn(arguments);
+}));*/
+
+var regExp = /(\w)\1/g;
+
+var str = 'aabbssssddwdw';
+
+while(regExp.test(str)){
+	regExp.lastIndex = 0;
+	str = str.replace(regExp, "$1");	
+}
+
+
+var count2 = function (str) {
+    var most = str.split('').sort().join('').match(/(.)1*/g); //排列重复字符
+    most = most.sort(function (a, b) { return a.length - b.length }).pop(); //按出现频繁排序
+    return most.length + ': ' + most[0];
+}
+
+function s_1(a) {
+    var a = a.join(""), b = [];
+    while (a.length > 0)
+            a = a.replace(new RegExp((b[b.length] = a.charAt(0)), "g"), "");
+    return b;
+}
+</script>
+</body>
+</html>

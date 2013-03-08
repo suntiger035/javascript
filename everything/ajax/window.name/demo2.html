@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<input type="button" id="btn" value="click me" />
+<script>
+function doAjax( url, callback ){
+	var doc = document,	
+		body = doc.body,
+		iframe = doc.createElement( 'iframe' ),
+		first = false,
+		onloadHandler = function(){
+			if( !first ){
+				iframe.contentWindow.location.href = 'http://www.test.com/widget/javascript/everything/ajax/window.name/null.html';	
+				first = true;
+			}else{
+				if( iframe.detachEvent ){
+					iframe.detachEvent('onload', onloadHandler); 	
+				}else{
+					iframe.onload = null;	
+				}	
+				callback(iframe.contentWindow.name);
+				//无法缓存到一个变量中去，会报错
+				//var $window = iframe.contentWindow,
+				//	$docment = $window.document;				
+				//$document.open();
+				//$document.write('');
+				//$document.close();
+				
+				iframe.contentWindow.document.open();
+				iframe.contentWindow.document.write("");
+				iframe.contentWindow.document.close();	
+				iframe.src = '';		
+				body.removeChild(iframe);
+				iframe = null;
+			}
+		};
+	
+	callback = callback || function(){}; 
+	
+	if( iframe.attachEvent ){
+		iframe.attachEvent('onload', onloadHandler); 	
+	}else{
+		iframe.onload = onloadHandler;		
+	}
+	
+	iframe.style.display = 'none';
+	iframe.src = url;
+	body.appendChild( iframe );
+}
+
+var btn = document.getElementById("btn");
+btn.onclick = function(){
+	doAjax('http://www.test1.com/widget/javascript/everything/ajax/window.name/handle.html', function(data){
+		console.log(data);
+	});	
+};
+
+
+</script>
+</body>
+</html>

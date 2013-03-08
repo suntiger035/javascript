@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<script>
+    var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+/*
+*\x表示十六进制的ASCII字符  \0表示ASCII的八进制表示 \u Unicode代码中十六进制代码为nnnn的字符  
+*\x00-\x1f : ASCII NUT SOH STX ---US
+*\x7f-\x9f : ASCII DEL ---不知道到什么
+*\u00ad    : SHY
+*\u0600-\u0604 : ؀ 	؁ 	؂ 	؃ 	 
+*\u070f : 
+*\u17b4 : ឴
+*\u17b5 : ឵
+*\u200c-\u200f : ZWNJ 	ZWJ 	LRM 	RLM
+*\u2028-\u202f : LS 	PS 	LRE 	RLE 	PDF 	LRO 	RLO 	NNBSP
+*\u2060-\u206f : WJ 	FA 	(×) 	(,) 	(+) 	  	  	  	  	  	ISS 	ASS 	IAFS 	AAFS 	NADS 	NODS
+*\ufeff : ZWNBSP
+*\ufff0-\uffff :   	  	  	  	  	  	  	  	  	IAA 	IAS 	IAT 	￼ 	� 	  	 
+*/
+        escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+        gap,
+        indent,
+        meta = { // table of character substitutions
+            '\b': '\\b',
+            '\t': '\\t',
+            '\n': '\\n',
+            '\f': '\\f',
+            '\r': '\\r',
+            '"' : '\\"',
+            '\\': '\\\\'
+        },
+        rep;
+
+
+    function quote(string) {
+
+// If the string contains no control characters, no quote characters, and no
+// backslash characters, then we can safely slap some quotes around it.
+// Otherwise we must also replace the offending characters with safe escape
+// sequences.
+
+        escapable.lastIndex = 0;
+        return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
+            var c = meta[a];
+            return typeof c === 'string' ? c :
+                '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+        }) + '"' : '"' + string + '"';
+    }
+	
+	console.log(quote('"'));
+	
+</script>
+</body>
+</html>

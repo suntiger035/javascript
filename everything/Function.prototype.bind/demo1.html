@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+11
+<script type="text/javascript">
+
+Function.prototype.bind2 = function(obj){
+	var slice = Array.prototype.slice;
+	var that = this;
+	var args = slice.call(arguments, 1);
+	var retFunc = function(){
+		return that.apply(obj, args.concat(slice.call(arguments)));
+		//return that.apply(obj, args.concat(arguments));
+	};
+	
+	
+	return retFunc;
+			
+}
+
+function person(){
+	console.log(this.name);
+	console.warn(arguments);
+	console.info(this);	
+}
+
+var p1 = person.bind2({
+	name : 11	
+}, 1, 2, 3);
+
+console.log(p1());
+
+person.call({
+	name : 11	
+});
+
+document.body.onclick = p1;
+
+
+function P(){
+	
+	return 1;	
+}
+
+console.log(new P);
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Html5在线自拍</title>
+    <script type="text/javascript" src="js/jquery-1.4.1.min.js"></script>
+    <style type="text/css">
+	#container div{background:yellow;margin:20px 0 0 0;}
+	</style>
+</head>
+    <body>
+        
+    <video id="video" autoplay></video>  
+    <input type="button" style="width:200px;height:70px;line-height:70px;font-size:40px;cursor:pointer;" value="拍照" /><br />
+    <div id="wrap" style="display:none;">
+    <h1>自拍的图片列表</h1>
+    <div id="container">
+
+    </div>
+    </div>
+    <script> 
+	if(!$.browser.webkit){
+		alert("只有谷歌浏览器支持");
+		throw new Error("只有谷歌浏览器支持");	
+	}	 
+    var video = document.getElementById("video"),
+		btn = document.querySelectorAll("input")[0];
+		
+		function createCanvas(video){
+			var canvas = document.createElement("canvas"),		
+				context = canvas.getContext("2d");
+				
+			canvas.style.display = 'none';
+			
+			canvas.width = "640";
+			canvas.height = "480";
+				
+			document.body.appendChild(canvas);
+				
+			context.drawImage(video, 0, 0, 640, 480); 
+			var imgData =canvas.toDataURL("image/png");
+			var data = imgData.substr(22);	
+			return {
+				canvas : canvas,
+				data : data	
+			}
+									
+		}
+		
+		function check(){
+			if($("#container div").size() > 0 ){
+				$("#wrap").show();
+			}else{
+				$("#wrap").hide();	
+			}
+				
+		}
+		
+		$(".del").live("click", function(){
+			$(this).parent().remove();
+			check()
+			return false;	
+		});
+		
+       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;  
+           if (navigator.getUserMedia) //  
+           {  
+               if (navigator.webkitURL)//  
+               {  
+                   navigator.getUserMedia({
+						"video": true
+					}, function (stream) {  
+                       video.src = window.webkitURL.createObjectURL(stream);  
+                   }, function (error) { alert(error); });  
+               }  
+               else //  
+               {  			   
+					navigator.getUserMedia({
+						"video": true
+					}, function(stream){  
+					  video.src = window.webkitURL.createObjectURL(stream);  
+					  video.play();  
+					}, function(error){});  			   
+               }  
+           }  
+		   
+		   btn.addEventListener("click", function(){
+  				var ret = createCanvas(video);
+				$.ajax({
+					url : 'upload.php',
+					data : {data : ret.data},
+					type : 'POST',
+					dataType : "json",
+					success : function(data){
+						var errorCode = parseInt( data.errorcode, 10 );
+						
+						if( errorCode === 0 ){
+							$("#container").append('<div><a href="javascript:void(0)" class="del">删除</a><img width="200" src="' + data.src + '" /></div>');
+							
+							alert('自拍成功！');	
+							
+							
+							
+						}else{
+							alert('自拍失败');
+						}
+						check();
+						$(ret.canvas).remove();							
+					}
+				});
+			}, false);
+    </script>  
+    </body>
+</html>

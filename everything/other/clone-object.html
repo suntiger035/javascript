@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<div>11</div><div>11</div><div>11</div><div>11</div><div>11</div><div>11</div>
+<script>
+/*var i = 0;
+function recursion(){
+	if(i >= 10){
+		return;	
+	}
+	console.log(i++);
+	console.info(arguments.callee.caller);
+	arguments.callee();	
+}
+recursion();*/
+
+
+function isArray( obj ){
+	return 	Object.prototype.toString.call(obj) === '[object Array]';
+}
+
+function isObject( obj ){
+	return 	Object.prototype.toString.call(obj) === '[object Object]';
+}
+
+function extend(obj){
+	
+	if(!obj || (obj.length && obj.length === 0) ){
+		throw new Error("[参数错误]:请传入对象或者数组");	
+	}
+	
+	var rets = null;
+	
+	if(obj.length){		
+		try{
+			rets = [].slice.call(obj, 0);	
+		}catch(e){
+			rets = [];
+			i = obj.length;
+			while(i--){
+				rets[i] = obj[i];
+			}
+		}
+	}else{
+		rets = {}
+		for(var key in obj){
+			var value = obj[key];
+			if(obj.hasOwnProperty(key)){
+				rets[key] = isObject(value) ? extend(value) : value;
+			}	
+		}	
+	
+	}
+	
+	return rets;	
+}
+
+var a = {
+	attr1 : 11,
+	attr2 : 22,
+	attr3 : {
+		attr31 : 31	,
+		attr44 : {
+			1 : 33,
+			33: 333	
+		}
+	}	
+};
+
+console.log(extend(a));
+
+console.log(extend(document.querySelectorAll("div")));
+
+var str = JSON.stringify(obj);
+var o = JSON.parse(str);
+</script>
+</body>
+</html>

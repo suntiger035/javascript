@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<iframe id="proxy" src="http://www.test1.com/widget/javascript/everything/ajax/window.name/handle.html?proxy=http%3A%2F%2Fwww.test.com%2Fwidget%2Fjavascript%2Feverything%2Fajax%2Fwindow.name%2Fproxy.html"></iframe>
+<script>
+var proxy = document.querySelector("#proxy") || document.frames["proxy"];
+proxy.onload = function(){
+	console.log(this);
+	this.removeAttribute("name");
+	//var obj = JSON.parse( this.name );
+	var obj = JSON.parse( this.contentWindow.name );
+	for(var o in obj){
+		console.log(o + " = " + obj[o] + "\n");	
+	}
+};
+</script>
+</body>
+</html>

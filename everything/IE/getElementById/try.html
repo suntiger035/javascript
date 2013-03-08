@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<div id="content">111</div>
+<script>
+var content = document.getElementById("content");   
+var _content = document.getElementById("Content");   //IE8以及较低版本的浏览器不区分ID的大小写，因此‘content’, 'Content'会当做相同的元素处理。
+</script>
+
+<input type="text" name="myElement" value="1111" />
+<div id="myElement" >222</div>
+<script>
+var content = document.getElementById("myElement");   //IE7中会返回input，其他浏览器正常
+</script>
+
+</body>
+</html>
